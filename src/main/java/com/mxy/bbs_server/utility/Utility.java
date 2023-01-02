@@ -1,0 +1,43 @@
+package com.mxy.bbs_server.utility;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class Utility {
+    public static String saveAvatar(MultipartFile avatar, String username) throws IOException {
+        final var targetAvatar = new File("./avatars/" + username + "/" + avatar.getOriginalFilename());
+        FileUtils.copyInputStreamToFile(avatar.getInputStream(), targetAvatar);
+        return NginxHelper.getAbsoluteUrl(targetAvatar.getAbsolutePath());
+    }
+
+    public static List<String> savePostImages(MultipartFile[] images, String postId) throws IOException {
+        final List<String> imagesLst = new ArrayList<>();
+        for (final var image: images) {
+            final var targetImage = new File("./post_images/" + postId + "/" + image.getOriginalFilename());
+            FileUtils.copyInputStreamToFile(image.getInputStream(), targetImage);
+            imagesLst.add(NginxHelper.getAbsoluteUrl(targetImage.getAbsolutePath()));
+        }
+        return imagesLst;
+    }
+
+    public static List<String> saveReviewImages(MultipartFile[] images, String reviewId) throws IOException {
+        final List<String> imagesLst = new ArrayList<>();
+        for (final var image: images) {
+            final var targetImage = new File("./review_images/" + reviewId + "/" + image.getOriginalFilename());
+            FileUtils.copyInputStreamToFile(image.getInputStream(), targetImage);
+            imagesLst.add(NginxHelper.getAbsoluteUrl(targetImage.getAbsolutePath()));
+        }
+        return imagesLst;
+    }
+
+    public static String getDate(String format) {
+        return new SimpleDateFormat(format).format(Calendar.getInstance().getTime());
+    }
+}
