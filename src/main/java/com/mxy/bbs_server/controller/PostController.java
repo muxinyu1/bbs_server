@@ -1,10 +1,8 @@
 package com.mxy.bbs_server.controller;
 
-import com.mxy.bbs_server.entity.Post;
 import com.mxy.bbs_server.entity.PostRequest;
 import com.mxy.bbs_server.response.post.PostResponse;
 import com.mxy.bbs_server.service.PostService;
-import com.mxy.bbs_server.utility.Utility;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

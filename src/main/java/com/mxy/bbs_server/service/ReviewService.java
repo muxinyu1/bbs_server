@@ -1,8 +1,6 @@
 package com.mxy.bbs_server.service;
 
-import com.mxy.bbs_server.entity.Post;
-import com.mxy.bbs_server.entity.Review;
-import com.mxy.bbs_server.entity.ReviewRequest;
+import com.mxy.bbs_server.entity.*;
 import com.mxy.bbs_server.mapper.PostMapper;
 import com.mxy.bbs_server.mapper.ReviewMapper;
 import com.mxy.bbs_server.response.review.ReviewResponse;
@@ -12,6 +10,7 @@ import com.mxy.bbs_server.utility.Utility;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -25,21 +24,23 @@ public class ReviewService {
     }
 
     public ReviewResponse add(ReviewRequest reviewRequest) throws IOException {
-        final var reviewToQuery = new Review(reviewRequest.getId(), null, null, null, null,null, null);
+        final var reviewToQuery = new ReviewData(reviewRequest.getId(), null, null, null, null,null, null);
         if (reviewMapper.query(reviewToQuery) != null) {
             return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_ALREADY_EXISTS, null);
         }
         final var images = Utility.saveReviewImages(reviewRequest.getImages(), reviewRequest.getId());
-        reviewMapper.add(new Review(reviewRequest.getId(), reviewRequest.getTargetPost(), Utility.getDate(Const.DATE_FORMAT), reviewRequest.getUsername(), reviewRequest.getContent(), images, 0));
-        final var previousPost = postMapper.query(new Post(reviewRequest.getTargetPost(), null, null, null, null, null, null, null));
+        reviewMapper.add(new ReviewData(reviewRequest.getId(), reviewRequest.getTargetPost(), Utility.getDate(Const.DATE_FORMAT), reviewRequest.getUsername(), reviewRequest.getContent(), Utility.toJson(images), 0));
+        final var previousPost = postMapper.query(new PostData(reviewRequest.getTargetPost(), null, null, null, null, null, null, null));
         //更新针对该post的评论
-        previousPost.getReviews().add(reviewRequest.getId());
+        final List<String> reviewsLst = Utility.fromJson(previousPost.getReviews(), List.class);
+        reviewsLst.add(reviewRequest.getId());
+        previousPost.setReviews(Utility.toJson(reviewsLst));
         postMapper.update(previousPost);
         return new ReviewResponse(true, null, reviewMapper.query(reviewToQuery));
     }
 
     public ReviewResponse query(ReviewRequest reviewRequest) {
-        final var review = reviewMapper.query(new Review(reviewRequest.getId(), null, null, null, null, null, null));
+        final var review = reviewMapper.query(new ReviewData(reviewRequest.getId(), null, null, null, null, null, null));
         if (review == null) {
             return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_DOES_NOT_EXISTS, null);
         }
