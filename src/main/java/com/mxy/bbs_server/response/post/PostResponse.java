@@ -1,6 +1,6 @@
 package com.mxy.bbs_server.response.post;
 
-import com.mxy.bbs_server.entity.PostData;
+import com.mxy.bbs_server.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
 public class PostResponse {
     private Boolean success;
     private PostResponseFailedReason postResponseFailedReason;
-    private PostData post;
+    private Post post;
 }

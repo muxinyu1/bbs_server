@@ -10,6 +10,7 @@ import com.mxy.bbs_server.utility.Utility;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,14 +37,31 @@ public class ReviewService {
         reviewsLst.add(reviewRequest.getId());
         previousPost.setReviews(Utility.toJson(reviewsLst));
         postMapper.update(previousPost);
-        return new ReviewResponse(true, null, reviewMapper.query(reviewToQuery));
+        final var reviewData = reviewMapper.query(reviewToQuery);
+        return new ReviewResponse(true, null, new Review(reviewData.getDate(),
+                reviewData.getTargetPost(),
+                reviewData.getDate(),
+                reviewData.getUsername(),
+                reviewData.getContent(),
+                Utility.fromJson(reviewData.getImages(), ArrayList.class),
+                reviewData.getLikeNum()
+        ));
     }
 
     public ReviewResponse query(ReviewRequest reviewRequest) {
-        final var review = reviewMapper.query(new ReviewData(reviewRequest.getId(), null, null, null, null, null, null));
-        if (review == null) {
+        final var reviewData = reviewMapper.query(new ReviewData(reviewRequest.getId(), null, null, null, null, null, null));
+        if (reviewData == null) {
             return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_DOES_NOT_EXISTS, null);
         }
-        return new ReviewResponse(true, null, review);
+        return new ReviewResponse(true, null,
+                new Review(reviewData.getDate(),
+                        reviewData.getTargetPost(),
+                        reviewData.getDate(),
+                        reviewData.getUsername(),
+                        reviewData.getContent(),
+                        Utility.fromJson(reviewData.getImages(), ArrayList.class),
+                        reviewData.getLikeNum()
+                )
+        );
     }
 }

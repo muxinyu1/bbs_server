@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Utility {
 
-    private static Gson gson = new Gson();
+    public static final Gson gson = new Gson();
     public static String saveAvatar(MultipartFile avatar, String username) throws IOException {
         final var targetAvatar = new File("./avatars/" + username + "/" + avatar.getOriginalFilename());
         FileUtils.copyInputStreamToFile(avatar.getInputStream(), targetAvatar);

@@ -45,7 +45,15 @@ public class PostService {
         previousUserInfo.setMyPosts(Utility.toJson(myPosts));
         userInfoMapper.update(previousUserInfo);
         final var postRes = postMapper.query(new PostData(postRequest.getId(), null, null, null, null, null, null, null));
-        return new PostResponse(true, null, postRes);
+        return new PostResponse(true, null, new Post(postRes.getId(),
+                postRes.getDate(),
+                postRes.getOwner(),
+                postRes.getTitle(),
+                postRes.getContent(),
+                Utility.fromJson(postRes.getImages(), ArrayList.class),
+                postRes.getLikeNum(), Utility.fromJson(postRes.getReviews(),
+                ArrayList.class)
+        ));
     }
 
     public PostResponse query(PostRequest postRequest) {
@@ -53,6 +61,16 @@ public class PostService {
         if (postRes == null) {
             return new PostResponse(false, PostResponseFailedReason.POST_DOES_NOT_EXIST, null);
         }
-        return new PostResponse(true, null, postRes);
+        return new PostResponse(true, null,
+                new Post(postRes.getId(),
+                        postRes.getDate(),
+                        postRes.getOwner(),
+                        postRes.getTitle(),
+                        postRes.getContent(),
+                        Utility.fromJson(postRes.getImages(), ArrayList.class),
+                        postRes.getLikeNum(), Utility.fromJson(postRes.getReviews(),
+                        ArrayList.class)
+                )
+        );
     }
 }
