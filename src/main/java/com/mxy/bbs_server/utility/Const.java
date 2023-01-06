@@ -15,4 +15,6 @@ public class Const {
     public static List<String> DEFAULT_COLLECTIONS = new ArrayList<>();
 
     public static String DATE_FORMAT = "yyyy年M月d日 HH:mm";
+
+    public static int POST_NUM = 10;
 }

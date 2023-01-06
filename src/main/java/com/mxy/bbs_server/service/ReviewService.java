@@ -38,7 +38,7 @@ public class ReviewService {
         previousPost.setReviews(Utility.toJson(reviewsLst));
         postMapper.update(previousPost);
         final var reviewData = reviewMapper.query(reviewToQuery);
-        return new ReviewResponse(true, null, new Review(reviewData.getDate(),
+        return new ReviewResponse(true, null, new Review(reviewData.getId(),
                 reviewData.getTargetPost(),
                 reviewData.getDate(),
                 reviewData.getUsername(),
