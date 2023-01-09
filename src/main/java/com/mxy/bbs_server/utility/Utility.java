@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class Utility {
 
@@ -24,6 +25,9 @@ public class Utility {
     public static List<String> savePostImages(MultipartFile[] images, String postId) throws IOException {
         final List<String> imagesLst = new ArrayList<>();
         for (final var image: images) {
+            if (Objects.requireNonNull(image.getOriginalFilename()).isEmpty()) {
+                continue;
+            }
             final var targetImage = new File("./post_images/" + postId + "/" + image.getOriginalFilename());
             FileUtils.copyInputStreamToFile(image.getInputStream(), targetImage);
             imagesLst.add(NginxHelper.getAbsoluteUrl(targetImage.getAbsolutePath()));
@@ -34,6 +38,9 @@ public class Utility {
     public static List<String> saveReviewImages(MultipartFile[] images, String reviewId) throws IOException {
         final List<String> imagesLst = new ArrayList<>();
         for (final var image: images) {
+            if (Objects.requireNonNull(image.getOriginalFilename()).isEmpty()) {
+                continue;
+            }
             final var targetImage = new File("./review_images/" + reviewId + "/" + image.getOriginalFilename());
             FileUtils.copyInputStreamToFile(image.getInputStream(), targetImage);
             imagesLst.add(NginxHelper.getAbsoluteUrl(targetImage.getAbsolutePath()));
