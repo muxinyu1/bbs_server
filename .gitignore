@@ -2,7 +2,7 @@ HELP.md
 avatars
 post_images
 review_images
-target/
+target
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
