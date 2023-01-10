@@ -54,7 +54,7 @@ public class ReviewService {
             return new ReviewResponse(false, ReviewResponseFailedReason.REVIEW_DOES_NOT_EXISTS, null);
         }
         return new ReviewResponse(true, null,
-                new Review(reviewData.getDate(),
+                new Review(reviewData.getId(),
                         reviewData.getTargetPost(),
                         reviewData.getDate(),
                         reviewData.getUsername(),
