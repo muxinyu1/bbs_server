@@ -52,8 +52,6 @@ public enum UserResponseFailedReason {
 
 与`/add`相同
 
-
-
 **注意, 除了user控制器, 其他的控制器请提交表单信息, 而不是json!!!**
 
 ## /userInfo [form-data]
@@ -119,4 +117,61 @@ public enum UserInfoResponseFailedReason {
 
 ## /post [form-data]
 
-### 
+### /add
+
+发一个帖子.
+
+表单字段:
+
+```json
+{
+    "id": "随机一个字符串作为帖子在数据库的主键",
+    "owner": "发帖人的username",
+    "titile": "猪肉涨价啦",
+    "content": "快点吃"
+    "images": //帖子图片, 让用户从本地选择
+}
+```
+
+`reponse`:
+
+```json
+{
+    "success": true,
+    "postResponseFailedReason": null
+    "post": {
+        "id": "dsahuidhsadhsak",
+        "date": "2023年1月8日",
+        "owner": "mxy2233",
+        "title": "猪肉涨价啦",
+        "content": "快点吃",
+        "images": [
+            //帖子图片的url
+            "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png",
+         ]
+        "likeNum": 12,
+        //回复的id
+        "reviews": [
+            "dhsajkdshakdh",
+            "hudhiiurye41521"
+        ]
+    }
+}
+```
+
+```java
+public enum PostResponseFailedReason {
+    //当查询帖子id会失败会返回此值
+    POST_DOES_NOT_EXIST,
+    //postid与数据库中的某个postid重复返回此值(基本不会出现这种错误)
+    POST_ALREADY_EXISTS,
+}
+```
+
+### /query
+
+表单字段与`/add`一致, 但只要求`id`有效.
+
+`reponse`:
+
+与`/add`一致

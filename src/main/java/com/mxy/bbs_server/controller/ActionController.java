@@ -20,4 +20,14 @@ public class ActionController {
     public ActionResponse like(@RequestBody ActionRequest actionRequest) {
         return actionService.like(actionRequest);
     }
+
+    @PostMapping("/favor")
+    public ActionResponse favor(@RequestBody ActionRequest actionRequest) {
+        return actionService.favor(actionRequest, false);
+    }
+
+    @PostMapping("/cancelFavor")
+    public ActionResponse cancelFavor(@RequestBody ActionRequest actionRequest) {
+        return actionService.favor(actionRequest, true);
+    }
 }
