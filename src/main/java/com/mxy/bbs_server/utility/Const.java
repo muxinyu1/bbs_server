@@ -7,7 +7,7 @@ public class Const {
     public static String DEFAULT_NICKNAME = "用户";
     public static String DEFAULT_PERSONAL_SIGN = "";
 
-    public static String NGINX_PORT = "http://nahida8848.xyz:8086";
+    public static String NGINX_PORT = "http://8.130.13.195:8086";
     public static String DEFAULT_AVATAR_URL = "./avatars/default.png";
 
     public static List<String> DEFAULT_POSTS = new ArrayList<>();

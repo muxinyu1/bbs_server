@@ -3,15 +3,13 @@ package com.mxy.bbs_server.controller;
 import com.mxy.bbs_server.entity.PostRequest;
 import com.mxy.bbs_server.response.post.PostResponse;
 import com.mxy.bbs_server.service.PostService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/post")
+@CrossOrigin("*")
 public class PostController {
     private final PostService postService;
 
