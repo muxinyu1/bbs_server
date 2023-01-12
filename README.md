@@ -1,28 +1,122 @@
-# bbs_server
+# Assembled Sever接口文档
 
-#### 介绍
-移动互联"小贴吧"服务端
+接口地址: `http://8.130.13.195:12345`
 
-#### 软件架构
-软件架构说明
+## /user [json]
+
+### /add
+
+添加一个用户
+
+`post`:
+
+```json
+{
+    "username": "username",
+    "password": "password"
+}
+```
+
+`response`:
+
+```json
+{
+    "success": true//失败时返回false
+    "userResponseFailedReason": null//失败时返回具体失败的原因
+    "user": {
+        "username": "username",
+        "password": "password"
+    }
+}
+```
+
+```java
+//枚举类型以枚举名字的字符串返回
+//例如如果用户名不存在,则userResponseFailedReason字段的值是"USERNAME_DOES_NOT_EXIST"
+public enum UserResponseFailedReason {
+    USERNAME_ALREADY_EXIST,
+    USERNAME_DOES_NOT_EXIST,
+    WRONG_PASSWORD,
+}
+```
+
+### /query
+
+查询一个`user`
+
+`post`:
+
+与`/add`相同
+
+`response`:
+
+与`/add`相同
 
 
-#### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+**注意, 除了user控制器, 其他的控制器请提交表单信息, 而不是json!!!**
 
-#### 使用说明
+## /userInfo [form-data]
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### /query
 
-#### 参与贡献
+查询用户信息
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+`post`:
 
+```json
+//查询用户信息只要求username字段有效,别的字段必须有,但是可以是任意值
+{
+    "username": "username",
+    "nickname": "随便一个值, 也可以是null",
+    "personalSign": "随便一个值, 也可以是null",
+    "avatar": //头像文件, 可以视空
+}
+```
+
+`response`:
+
+```json
+{
+    "success": true,
+    "userInfoResponseFailedReason": null,
+    //失败时userInfo为null
+    "userInfo": {
+        "username": "username",
+        "nickname": "nickname",
+        "personalSign": "personal sign",
+        //用户头像图片的地址
+        "avatarUrl": "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png"
+        "myPosts": [
+            "post1",
+            "post2"
+         ],
+        "myCollections": [
+            "post1",
+            "post1"
+        ]
+    }
+}
+```
+
+```java
+public enum UserInfoResponseFailedReason {
+    USERNAME_DOES_NOT_EXIST
+}
+```
+
+### /update
+
+更新用户信息
+
+`post`:
+
+与`query`相同, 但是要求`avatar`字段不为空, 因为用户必须有一个头像.
+
+`response`:
+
+与`query`相同
+
+## /post [form-data]
+
+### 
