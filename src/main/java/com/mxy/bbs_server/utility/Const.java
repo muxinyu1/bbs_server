@@ -16,5 +16,5 @@ public class Const {
 
     public static String DATE_FORMAT = "yyyy年M月d日 HH:mm";
 
-    public static int POST_NUM = 10;
+    public static int POST_NUM = 5;
 }
