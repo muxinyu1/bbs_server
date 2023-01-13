@@ -24,4 +24,9 @@ public class UserController {
     public UserResponse queryUser(@RequestBody User user) {
         return userService.query(user);
     }
+
+    @GetMapping("query/{username}")
+    public UserResponse queryUser(@PathVariable("username") String username) {
+        return userService.query(new User(username, ""));
+    }
 }

@@ -26,4 +26,9 @@ public class PostController {
     public PostResponse query(PostRequest postRequest) {
         return postService.query(postRequest);
     }
+
+    @GetMapping("/query/{postId}")
+    public PostResponse query(@PathVariable("postId") String postId) {
+        return postService.query(new PostRequest(postId, "", "", "", null));
+    }
 }

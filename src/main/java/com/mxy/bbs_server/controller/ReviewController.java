@@ -3,10 +3,7 @@ package com.mxy.bbs_server.controller;
 import com.mxy.bbs_server.entity.ReviewRequest;
 import com.mxy.bbs_server.response.review.ReviewResponse;
 import com.mxy.bbs_server.service.ReviewService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -29,5 +26,10 @@ public class ReviewController {
     @PostMapping("/query")
     public ReviewResponse query(ReviewRequest reviewRequest) {
         return reviewService.query(reviewRequest);
+    }
+
+    @GetMapping("query/{reviewId}")
+    public ReviewResponse query(@PathVariable("reviewId") String reviewId) {
+        return reviewService.query(new ReviewRequest(reviewId, "", "", "", null));
     }
 }

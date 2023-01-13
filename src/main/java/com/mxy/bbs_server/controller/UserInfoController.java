@@ -3,10 +3,7 @@ package com.mxy.bbs_server.controller;
 import com.mxy.bbs_server.entity.UserInfoRequest;
 import com.mxy.bbs_server.response.userinfo.UserInfoResponse;
 import com.mxy.bbs_server.service.UserInfoService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -28,5 +25,10 @@ public class UserInfoController {
     @PostMapping("/query")
     public UserInfoResponse query(UserInfoRequest userInfoRequest) {
         return userInfoService.query(userInfoRequest);
+    }
+
+    @GetMapping("/query/{username}")
+    public UserInfoResponse query(@PathVariable("username") String username) {
+        return userInfoService.query(new UserInfoRequest(username, "", "", null));
     }
 }
