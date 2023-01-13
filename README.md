@@ -12,8 +12,8 @@
 
 ```json
 {
-    "username": "username",
-    "password": "password"
+  "username": "username",
+  "password": "password"
 }
 ```
 
@@ -21,12 +21,12 @@
 
 ```json
 {
-    "success": true//失败时返回false
-    "userResponseFailedReason": null//失败时返回具体失败的原因
-    "user": {
-        "username": "username",
-        "password": "password"
-    }
+  "success": true//失败时返回false
+  "userResponseFailedReason": null//失败时返回具体失败的原因
+  "user": {
+    "username": "username",
+    "password": "password"
+  }
 }
 ```
 
@@ -65,35 +65,52 @@ public enum UserResponseFailedReason {
 ```json
 //查询用户信息只要求username字段有效,别的字段必须有,但是可以是任意值
 {
-    "username": "username",
-    "nickname": "随便一个值, 也可以是null",
-    "personalSign": "随便一个值, 也可以是null",
-    "avatar": //头像文件, 可以视空
+  "username": "username",
+  "nickname": "随便一个值, 也可以是null",
+  "personalSign": "随便一个值, 也可以是null",
+  "avatar":
+  //头像文件, 可以视空
 }
+```
+
+`get`:
+
+发送请求到`/userInfo/query/{username}`
+
+`axios`样例:
+
+```js
+var username = "mxy2233"
+axios.get(`/userInfo/query/${username}`).then((response) => {
+    const userInfo = response.data.userInfo;
+    console.log(userInfo);
+}).catch((error) => {
+    console.log(error);
+})
 ```
 
 `response`:
 
 ```json
 {
-    "success": true,
-    "userInfoResponseFailedReason": null,
-    //失败时userInfo为null
-    "userInfo": {
-        "username": "username",
-        "nickname": "nickname",
-        "personalSign": "personal sign",
-        //用户头像图片的地址
-        "avatarUrl": "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png"
-        "myPosts": [
-            "post1",
-            "post2"
-         ],
-        "myCollections": [
-            "post1",
-            "post1"
-        ]
-    }
+  "success": true,
+  "userInfoResponseFailedReason": null,
+  //失败时userInfo为null
+  "userInfo": {
+    "username": "username",
+    "nickname": "nickname",
+    "personalSign": "personal sign",
+    //用户头像图片的地址
+    "avatarUrl": "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png"
+    "myPosts": [
+      "post1",
+      "post2"
+    ],
+    "myCollections": [
+      "post1",
+      "post1"
+    ]
+  }
 }
 ```
 
@@ -125,11 +142,12 @@ public enum UserInfoResponseFailedReason {
 
 ```json
 {
-    "id": "随机一个字符串作为帖子在数据库的主键",
-    "owner": "发帖人的username",
-    "titile": "猪肉涨价啦",
-    "content": "快点吃"
-    "images": //帖子图片, 让用户从本地选择
+  "id": "随机一个字符串作为帖子在数据库的主键",
+  "owner": "发帖人的username",
+  "titile": "猪肉涨价啦",
+  "content": "快点吃"
+  "images":
+  //帖子图片, 让用户从本地选择
 }
 ```
 
@@ -137,25 +155,25 @@ public enum UserInfoResponseFailedReason {
 
 ```json
 {
-    "success": true,
-    "postResponseFailedReason": null
-    "post": {
-        "id": "dsahuidhsadhsak",
-        "date": "2023年1月8日",
-        "owner": "mxy2233",
-        "title": "猪肉涨价啦",
-        "content": "快点吃",
-        "images": [
-            //帖子图片的url
-            "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png",
-         ]
-        "likeNum": 12,
-        //回复的id
-        "reviews": [
-            "dhsajkdshakdh",
-            "hudhiiurye41521"
-        ]
-    }
+  "success": true,
+  "postResponseFailedReason": null
+  "post": {
+    "id": "dsahuidhsadhsak",
+    "date": "2023年1月8日",
+    "owner": "mxy2233",
+    "title": "猪肉涨价啦",
+    "content": "快点吃",
+    "images": [
+      //帖子图片的url
+      "http://8.130.13.195:8086/home/nginx_root/assembled_server/server/avatars/default.png"
+    ]
+    "likeNum": 12,
+    //回复的id
+    "reviews": [
+      "dhsajkdshakdh",
+      "hudhiiurye41521"
+    ]
+  }
 }
 ```
 
@@ -171,6 +189,10 @@ public enum PostResponseFailedReason {
 ### /query
 
 表单字段与`/add`一致, 但只要求`id`有效.
+
+`get`:
+
+发送请求到`/post/query/{postId}`
 
 `reponse`:
 
