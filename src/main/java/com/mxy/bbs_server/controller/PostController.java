@@ -4,6 +4,7 @@ import com.mxy.bbs_server.entity.PostRequest;
 import com.mxy.bbs_server.response.post.PostResponse;
 import com.mxy.bbs_server.service.PostService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -20,6 +21,11 @@ public class PostController {
     @PostMapping("/add")
     public PostResponse add(PostRequest postRequest) throws IOException {
         return postService.add(postRequest);
+    }
+
+    @PostMapping("/addWithoutImage")
+    public PostResponse add(String id, String owner, String title, String content) throws IOException {
+        return postService.add(new PostRequest(id, owner, title, content, new MultipartFile[0]));
     }
 
     @PostMapping("/query")
